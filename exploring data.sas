@@ -1,21 +1,26 @@
+/*import data*/
 proc import out = work.trans
 datafile = "/home/u49781046/Final Thesis/37938-0005-Data.tsv"
 dbms = tab
 replace;
 run;
 
+/*check contents for variable names*/
 proc contents data = work.trans;
 run;
 
+/*look at gender identity distribution*/
 proc freq data = work.trans;
 tables race*gender_identity;
 run;
 
+/*look at specific health variable*/
 proc freq data = work.trans;
 where trans_cis = 1;
 tables q62c;
 run;
 
+/* recode variables */
 data conditions replace;
 set work.trans;
 length hypertension $8;
@@ -33,10 +38,13 @@ if q62a = 1 or q62b = 1 or q62c = 1 or q62d = 1 or q62e = 1
 else surgery = "No";
 run;
 
+/* looking at recoding to see if it worked */
 proc freq data = work.conditions;
 tables gender_identity * cholesterol;
 run;
 
+
+/* logistic for sample tables */
 proc logistic data=work.conditions descending;
   class trans_cis(ref = "2");
   model hypertension = trans_cis;
