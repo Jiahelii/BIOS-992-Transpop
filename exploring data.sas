@@ -16,31 +16,143 @@ run;
 
 /*look at specific health variable*/
 proc freq data = work.trans;
-where trans_cis = 1;
-tables q62c;
+tables q97_19 q97_20;
 run;
 
 /* recode variables */
 data conditions replace;
 set work.trans;
+length trans_status $8;
+if trans_cis = 1 then trans_status = "Yes";
+if trans_cis = 2 then trans_status = "No";
+length gender_id $8;
+if gender_identity = 1 then gender_id = "Cis Male";
+if gender_identity = 2 then gender_id = "Cis Female";
+if gender_identity = 3 then gender_id = "Trans Man";
+if gender_identity = 4 then gender_id = "Trans Woman";
+if gender_identity = 5 then gender_id = "Non-binary";
+length race_id $20;
+if race = 1 then race_id = "Asian";
+if race = 2 then race_id = "Black/AA";
+if race = 3 then race_id = "Hispanic/Latino";
+if race = 4 then race_id = "Middle Eastern";
+if race = 5 then race_id = "Native Hawaiian/Pacific Islander";
+if race = 6 then race_id = "White";
+if race = 7 then race_id = "American Indian";
+if race = 8 then race_id = "Multirace";
+if race = 9 then race_id = "Other";
+length sexual_minority $25;
+if sexminid = 0 then sexual_minority = "Heterosexual";
+if sexminid = 1 then sexual_minority = "Sexual minority identity";
+length poverty_recode $20;
+if poverty_i = 0 then poverty_recode = "Not in poverty";
+if poverty_i = 1 then poverty_recode = "Yes in poverty";
+length education $30;
+if geducation = 1 then education = "Less than high school diploma";
+if geducation = 2 then education = "High school degree or diploma";
+if geducation = 3 then education = "technical/vocational school";
+if geducation = 4 then education = "Some college";
+if geducation = 5 then education = "College graduate";
+if geducation = 6 then education = "Post graduate work or degree";
 length hypertension $8;
 if q97_1 = . then hypertension = "No";
 if q97_1 = 1 then hypertension = "Yes";
 length cholesterol $8;
 if q97_2 = . then cholesterol = "No";
 if q97_2 = 2 then cholesterol = "Yes";
-gender_id = put(gender_identity, $14.);
+length heart_condition $8;
+if q97_3 = . then heart_condition = "No";
+if q97_3 = 3 then heart_condition = "Yes";
+length angina $8;
+if q97_4 = . then angina = "No";
+if q97_4 = 4 then angina = "Yes";
+length heart_attack $8;
+if q97_5 = . then heart_attack = "No";
+if q97_5 = 5 then heart_attack = "Yes";
+length stroke $8;
+if q97_6 = . then stroke = "No";
+if q97_6 = 6 then stroke = "Yes";
+length emphysema $8;
+if q97_7 = . then emphysema = "No";
+if q97_7 = 7 then emphysema = "Yes";
+length asthma $8;
+if q97_8 = . then athsma = "No";
+if q97_8 = 8 then athsma = "Yes";
+length ulcer $8;
+if q97_9 = . then ulcer = "No";
+if q97_9 = 9 then ulcer = "Yes";
+length cancer $8;
+if q97_10 = . then cancer = "No";
+if q97_10 = 10 then cancer = "Yes";
+length diabetes $8;
+if q97_11 = . then diabetes = "No";
+if q97_11 = 11 then diabetes = "Yes";
+length pre_diabetes $8;
+if q97_12 = . then pre_diabetes = "No";
+if q97_12 = 12 then pre_diabetes = "Yes";
+length arthritis $8;
+if q97_13 = . then arthritis = "No";
+if q97_13 = 13 then arthritis = "Yes";
+length blood_clot $8;
+if q97_14 = . then blood_clot = "No";
+if q97_14 = 14 then blood_clot = "Yes";
+length osteoporosis $8;
+if q97_15 = . then osteoporosis = "No";
+if q97_15 = 15 then osteoporosis = "Yes";
+length thyroid $8;
+if q97_16 = . then thyroid = "No";
+if q97_16 = 16 then thyroid = "Yes";
+length liver_disease $8;
+if q97_17 = . then liver_disease = "No";
+if q97_17 = 17 then liver_disease = "Yes";
+length copd $8;
+if q97_18 = . then copd = "No";
+if q97_18 = 18 then copd = "Yes";
+length crohns $8;
+if q97_19 = . then crohns = "No";
+if q97_19 = 1 then crohns = "Yes";
+length kidney_disease $8;
+if q97_20 = . then kidney_disease = "No";
+if q97_20 = 2 then kidney_disease = "Yes";
+length health_not_good 5;
+health_not_good = q94;
 length surgery $12;
 if q62a = 1 or q62b = 1 or q62c = 1 or q62d = 1 or q62e = 1
 	or q63a = 1 or q63b = 1 or q63c = 1 or q63d = 1 or q63e = 1 or q63f = 1 or q63g = 1
 	or q63h = 1 or q63i = 1 or q63j = 1
 	then surgery = "Yes";
 else surgery = "No";
+length hormone $8;
+if q65 = 1 then hormone = "Yes";
+if q65 = 2 then hormone = "No";
+length insurance $12;
+if q81_1 = 1 then insurance = "No";
+if q81_1 = . then insurance = "Yes";
+length trans_provider $60;
+if q87 = 1 then trans_provider = "I don't have a transgender-related healthcare provider";
+if q87 = 2 then trans_provider = "They know almost everything about transgender care";
+if q87 = 3 then trans_provider = "They know most things about transgender care";
+if q87 = 4 then trans_provider = "They know some things about transgender care";
+if q87 = 5 then trans_provider = "They know almost nothing about transgender care";
+if q87 = 6 then trans_provider = "I am not sure how much they know about transgender care";
+length smoking $30;
+if q116 = 1 then smoking = "Every day";
+if q116 = 2 then smoking = "Some Days";
+if q116 = 3 then smoking = "Not at all";
+if q116 = . then smoking = "Missing";
+if q116 = 7 then smoking = "Non-smoker";
 run;
 
-/* looking at recoding to see if it worked */
+/* check recoding */
 proc freq data = work.conditions;
-tables gender_identity * cholesterol;
+tables q97_1 * hypertension q97_2 * cholesterol q97_3 * heart_condition
+	   q97_4 * angina q97_5 * heart_attack q97_6 * stroke
+	   q97_7 * emphysema q97_8 * asthma q97_9 * ulcer
+	   q97_10 * cancer q97_11 * diabetes q97_12 * pre_diabetes
+	   q97_13 * arthritis q97_14 * blood_clot q97_15 * osteoporosis
+	   q97_16 * thyroid q97_17 * liver_disease q97_18 * copd
+	   q97_19 * crohns q97_20 * kidney_disease
+	   ;
 run;
 
 
