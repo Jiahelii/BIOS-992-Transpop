@@ -190,6 +190,70 @@ proc freq data = work.conditions;
 tables gender_id * emphysema trans_status * emphysema;
 run;
 
+/*checking assumptions for asthma */
+proc freq data = work.conditions;
+tables gender_id * asthma trans_status * asthma;
+run;
+
+/*checking assumptions for ulcer */
+proc freq data = work.conditions;
+tables gender_id * ulcer trans_status * ulcer;
+run;
+
+/*checking assumptions for cancer */
+proc freq data = work.conditions;
+tables gender_id * cancer trans_status * cancer;
+run;
+
+/*checking assumptions for diabetes */
+proc freq data = work.conditions;
+tables gender_id * diabetes trans_status * diabetes;
+run;
+
+/*checking assumptions for pre_diabetes */
+proc freq data = work.conditions;
+tables gender_id * pre_diabetes trans_status * pre_diabetes;
+run;
+
+/*checking assumptions for arthritis */
+proc freq data = work.conditions;
+tables gender_id * arthritis trans_status * arthritis;
+run;
+
+/*checking assumptions for blood_clot */
+proc freq data = work.conditions;
+tables gender_id * blood_clot trans_status * blood_clot;
+run;
+
+/*checking assumptions for osteoporosis */
+proc freq data = work.conditions;
+tables gender_id * osteoporosis trans_status * osteoporosis;
+run;
+
+/*checking assumptions for thyroid */
+proc freq data = work.conditions;
+tables gender_id * thyroid trans_status * thyroid;
+run;
+
+/*checking assumptions for liver_disease */
+proc freq data = work.conditions;
+tables gender_id * liver_disease trans_status * liver_disease;
+run;
+
+/*checking assumptions for copd */
+proc freq data = work.conditions;
+tables gender_id * copd trans_status * copd;
+run;
+
+/*checking assumptions for crohns */
+proc freq data = work.conditions;
+tables gender_id * crohns trans_status * crohns;
+run;
+
+/*checking assumptions for kidney_disease */
+proc freq data = work.conditions;
+tables gender_id * kidney_disease trans_status * kidney_disease;
+run;
 
 
 /* logistic for sample tables */
