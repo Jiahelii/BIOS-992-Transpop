@@ -160,6 +160,37 @@ proc freq data = work.conditions;
 tables gender_id * hypertension trans_status * hypertension;
 run;
 
+/*checking assumptions for cholesterol */
+proc freq data = work.conditions;
+tables gender_id * cholesterol trans_status * cholesterol;
+run;
+
+/*checking assumptions for heart condition */
+proc freq data = work.conditions;
+tables gender_id * heart_condition trans_status * heart_condition;
+run;
+
+/*checking assumptions for angina */
+proc freq data = work.conditions;
+tables gender_id * angina trans_status * angina;
+run;
+
+/*checking assumptions for heart attack */
+proc freq data = work.conditions;
+tables gender_id * heart_attack trans_status * heart_attack;
+run;
+
+/*checking assumptions for stroke */
+proc freq data = work.conditions;
+tables gender_id * stroke trans_status * stroke;
+run;
+
+/*checking assumptions for emphysema */
+proc freq data = work.conditions;
+tables gender_id * emphysema trans_status * emphysema;
+run;
+
+
 
 /* logistic for sample tables */
 proc logistic data=work.conditions descending;
