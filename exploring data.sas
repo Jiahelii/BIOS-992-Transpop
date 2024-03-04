@@ -155,6 +155,11 @@ tables q97_1 * hypertension q97_2 * cholesterol q97_3 * heart_condition
 	   ;
 run;
 
+/*checking assumptions for hypertension */
+proc freq data = work.conditions;
+tables gender_id * hypertension trans_status * hypertension;
+run;
+
 
 /* logistic for sample tables */
 proc logistic data=work.conditions descending;
