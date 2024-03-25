@@ -68,3 +68,28 @@ proc logistic data=work.trans descending;
   class trans_status(ref = "No");
   model blood_clot = trans_status;
 run;
+
+proc logistic data=work.trans descending;
+  class trans_status(ref = "No");
+  model osteoporosis = trans_status;
+run;
+
+proc logistic data=work.trans descending;
+  class trans_status(ref = "No");
+  model thyroid = trans_status;
+run;
+
+proc logistic data=work.trans descending;
+  class trans_status(ref = "No");
+  model liver_disease = trans_status;
+run;
+
+proc logistic data=work.trans descending;
+  class trans_status(ref = "No");
+  model copd = trans_status;
+run;
+
+proc logistic data=work.trans descending;
+  class trans_status(ref = "No");
+  model crohns = trans_status;
+run;
