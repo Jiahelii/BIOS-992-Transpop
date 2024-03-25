@@ -1,0 +1,142 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+```{r}
+library(dplyr)
+library(broom)
+library(tidyr)
+
+setwd("C:/Users/jocel/Desktop")
+graph <- read.csv("graph.csv")
+head(graph)
+```
+```{r}
+table(graph$asthma)
+```
+
+```{r}
+graph <- graph %>%
+  mutate(asthma = ifelse(asthma == "Ye", "Yes", asthma)) %>%
+  mutate(across(c(hypertension, cholesterol, heart_condition, heart_attack, emphysema, asthma), 
+                ~ as.integer(. == "Yes")))
+
+```
+
+
+```{r}
+sapply(graph[c("hypertension", "cholesterol", "heart_condition", "heart_attack", "emphysema", "asthma")], 
+       function(x) unique(x))
+
+```
+
+```{r}
+graph <- graph %>%
+  mutate(transgender = ifelse(gender_id %in% c("Non-bina", "Trans Ma", "Trans Wo"), 1, 0))
+```
+
+```{r}
+calculate_odds_ratio <- function(data, health_condition) {
+  formula <- as.formula(paste(health_condition, "~ transgender"))
+  model <- glm(formula, family = binomial, data = data)
+  tidy_model <- tidy(model, conf.int = TRUE, exponentiate = TRUE)
+  return(tidy_model)
+}
+
+
+health_conditions <- c("hypertension", "cholesterol", "heart_condition", "heart_attack", "emphysema", "asthma")
+
+odds_ratios_list <- lapply(health_conditions, function(condition) {
+  calculate_odds_ratio(graph, condition)
+})
+
+names(odds_ratios_list) <- health_conditions
+
+odds_ratios_list
+
+```
+
+```{r}
+graph <- graph %>%
+  mutate(across(c(ulcer, cancer), 
+                ~ as.integer(. == "Yes")))
+
+calculate_odds_ratio <- function(data, health_condition) {
+  formula <- as.formula(paste(health_condition, "~ transgender"))
+  model <- glm(formula, family = binomial, data = data)
+  tidy_model <- tidy(model, conf.int = TRUE, exponentiate = TRUE)
+  return(tidy_model)
+}
+
+
+health_conditions <- c("ulcer", "cancer")
+
+odds_ratios_list <- lapply(health_conditions, function(condition) {
+  calculate_odds_ratio(graph, condition)
+})
+
+names(odds_ratios_list) <- health_conditions
+
+odds_ratios_list
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
