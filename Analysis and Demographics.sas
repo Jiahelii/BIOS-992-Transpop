@@ -93,3 +93,12 @@ proc logistic data=work.trans descending;
   class trans_status(ref = "No");
   model crohns = trans_status;
 run;
+
+/* Interactions */
+
+/* Logistic Regresstion: Health Condition = transgender status + insurance + transgender status * insurance */
+proc logistic data=work.trans descending;
+  class trans_status(ref="No") insurance;
+  model ulcer = trans_status insurance trans_status*insurance / clparm=wald;
+run;
+
