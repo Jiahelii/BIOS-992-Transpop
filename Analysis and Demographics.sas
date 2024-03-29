@@ -102,3 +102,36 @@ proc logistic data=work.trans descending;
   model ulcer = trans_status insurance trans_status*insurance / clparm=wald;
 run;
 
+/* linear regression */
+
+/* look at data distribution */
+proc univariate data=work.trans;
+	where health_not_good <= 30;
+    var health_not_good;
+    histogram health_not_good;
+run;
+
+/* look at data distribution by class */
+proc sgplot data=work.trans;
+	where health_not_good <= 30;
+    vbox health_not_good / category=trans_status;
+run;
+
+proc sgplot data=work.trans;
+	where health_not_good <= 30;
+    vbox health_not_good / category=gender_id;
+run;
+
+/*linear regression with trans_status as predictor variable */
+proc glm data = work.trans;
+where health_not_good <= 30;
+class trans_status;
+model health_not_good = trans_status;
+run;
+
+/*linear regression with gender_id as predictor variable */
+proc glm data = work.trans;
+where health_not_good <= 30;
+class gender_id;
+model health_not_good = gender_id;
+run;
