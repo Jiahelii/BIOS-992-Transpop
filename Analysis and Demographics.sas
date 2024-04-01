@@ -14,6 +14,14 @@ proc freq data = work.trans;
 tables race_id * gender_id race_id * trans_status / norow nocum;
 run;
 
+proc freq data = work.trans order=data;
+tables education * gender_id education * trans_status / norow ;
+run;
+
+proc freq data = work.trans order=data;
+tables hormone * gender_id hormone * trans_status / norow ;
+run;
+
 proc means data = work.trans n mean std maxdec = 2;
 var age;
 run;
@@ -41,32 +49,32 @@ run;
 /* logistic regression for odds ratios */
 proc logistic data=work.trans descending;
   class trans_status(ref = "No");
-  model ulcer = trans_status;
+  model ulcer = age trans_status;
 run;
 
 proc logistic data=work.trans descending;
   class trans_status(ref = "No");
-  model cancer = trans_status;
+  model cancer = age trans_status;
 run;
 
 proc logistic data=work.trans descending;
   class trans_status(ref = "No");
-  model diabetes = trans_status;
+  model diabetes = age trans_status;
 run;
 
 proc logistic data=work.trans descending;
   class trans_status(ref = "No");
-  model pre_diabetes = trans_status;
+  model pre_diabetes = age trans_status;
 run;
 
 proc logistic data=work.trans descending;
   class trans_status(ref = "No");
-  model arthritis = trans_status;
+  model arthritis = age trans_status;
 run;
 
 proc logistic data=work.trans descending;
   class trans_status(ref = "No");
-  model blood_clot = trans_status;
+  model blood_clot = age trans_status;
 run;
 
 proc logistic data=work.trans descending;
@@ -117,21 +125,15 @@ proc sgplot data=work.trans;
     vbox health_not_good / category=trans_status;
 run;
 
-proc sgplot data=work.trans;
-	where health_not_good <= 30;
-    vbox health_not_good / category=gender_id;
-run;
-
 /*linear regression with trans_status as predictor variable */
 proc glm data = work.trans;
 where health_not_good <= 30;
-class trans_status;
-model health_not_good = trans_status;
+class trans_status(ref="No");
+model health_not_good = age trans_status /solution clparm;
 run;
 
-/*linear regression with gender_id as predictor variable */
-proc glm data = work.trans;
+proc means data = work.trans maxdec = 2;
 where health_not_good <= 30;
-class gender_id;
-model health_not_good = gender_id;
+class trans_status;
+var health_not_good;
 run;
